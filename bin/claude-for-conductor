@@ -1,0 +1,25 @@
+#!/bin/zsh -f
+# Conductor launches this instead of its bundled Claude Code (claude_code_executable_path).
+# It selects the active account, then execs Conductor's own bundled binary unchanged.
+home=${CLAUDE_ACCOUNTS_HOME:-$HOME/.claude-accounts}
+if [[ -r $home/active ]]; then
+  id=$(<$home/active); id=${id//[[:space:]]/}
+  [[ -n $id && -d $home/$id ]] && export CLAUDE_CONFIG_DIR=$home/$id
+fi
+support=${CONDUCTOR_SUPPORT:-$HOME/Library/Application Support/com.conductor.app}
+self=${0:A}
+target=""
+if [[ -e $support/bin/claude ]]; then
+  cand=${support}/bin/claude
+  cand=${cand:A}
+  [[ -x $cand && $cand != $self ]] && target=$cand
+fi
+fallback=$HOME/.local/bin/claude
+if [[ -z $target && -x $fallback && ${fallback:A} != $self ]]; then
+  target=$HOME/.local/bin/claude
+fi
+if [[ -z $target ]]; then
+  print -u2 "claude-for-conductor: no Claude Code binary found (looked in Conductor and ~/.local/bin)"
+  exit 127
+fi
+exec $target "$@"

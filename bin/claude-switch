@@ -1,0 +1,2 @@
+#!/bin/zsh -f
+exec /usr/bin/python3 -I "${0:A:h}/../cli/claude_switch.py" "$@"

@@ -1,0 +1,8 @@
+#!/bin/zsh
+stub_name=${0:t}; . "${0:A:h}/_log.sh"
+name=$(basename "$0")
+f="${STUB_DIR_OUT:-/nonexistent}/$name.out"
+[[ -f $f ]] && cat "$f"
+rc="${STUB_DIR_OUT:-/nonexistent}/$name.rc"
+[[ -f $rc ]] && exit $(<"$rc")
+exit 0
