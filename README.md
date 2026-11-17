@@ -83,6 +83,8 @@ Sessions that are already running keep the account they started with; only new `
 
 ## Updates
 
+<img src="docs/screenshots/update.png" width="330" alt="The menu showing Update Available">
+
 The app looks for a new version on GitHub when it starts and from time to time after that. When there is one, **Update Available** appears in the menu; click it and the app downloads the update, rebuilds itself and restarts. You can also check any time under **More** → **Check for Updates…**.
 
 Updates are never installed without that click.
